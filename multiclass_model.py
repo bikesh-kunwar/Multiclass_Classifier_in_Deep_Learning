@@ -9,6 +9,7 @@ def define_dense_model_single_layer(input_length, activation_f='sigmoid', output
     activation_f: the activation function
     output_length: the number of outputs (number of neurons)"""
     model = keras.Sequential()
+    model.add(keras.layers.Dense(units=output_length, input_dim=input_length, activation=activation_f))
     return model
 
 def define_dense_model_with_hidden_layer(input_length, 
@@ -22,6 +23,12 @@ def define_dense_model_with_hidden_layer(input_length,
     output_length: the number of outputs (number of neurons in the output layer)"""
 
     model = keras.Sequential()
+    # Add a hidden layer with the specified activation function and number of neurons
+    model.add(keras.layers.Dense(units=hidden_layer_size, input_dim=input_length, activation=activation_func_array[0]))
+    
+    # Add the output layer with the specified activation function and number of neurons
+    model.add(keras.layers.Dense(units=output_length, activation=activation_func_array[1]))
+    
     return model
 
 
@@ -41,13 +48,21 @@ def fit_mnist_model(x_train, y_train, model, epochs=2, batch_size=2):
     then fit the model on the training data. (pass the epochs and batch_size params)
     """
     # model.compile  ... 
-    # model.fit ...    
+    # model.fit ... 
+    optimizer = keras.optimizers.Adam(learning_rate=0.001)  # You can adjust the learning rate as needed
+    loss_function = 'categorical_crossentropy'  # Use categorical crossentropy for multi-class problems
+    metrics_list = ['accuracy']
+
+    model.compile(optimizer=optimizer, loss=loss_function, metrics=metrics_list)
+    y_train = keras.utils.to_categorical(y_train, num_classes=10)
+    model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)   
     return model
   
 def evaluate_mnist_model(x_test, y_test, model):
     """Evaluate the model on the test data.
     Hint: use model.evaluate() to evaluate the model on the test data.
     """
-    loss, accuracy = None, None # model evaluate
+    y_test = keras.utils.to_categorical(y_test, num_classes=10)
+    # y_test = binarize_labels(y_test, target_digit)
+    loss, accuracy = model.evaluate(x_test, y_test)  ## change this.
     return loss, accuracy
-
