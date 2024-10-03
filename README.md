@@ -1,4 +1,4 @@
-# Ex-5: Multiclass Classifier
+#  Multiclass Classifier
 
 ## Overview
 In this exercise, you will implement a multiclass classifier using the concepts learned in previous exercises.
@@ -9,7 +9,7 @@ In this exercise, you will implement a multiclass classifier using the concepts 
 3. Implement and train a multiclass classifier model.
 4. Evaluate the performance of the model.
 
-## The Assignment
+## The Task
 You can reuse your solutions for `define_dense_model_single_layer` and `define_dense_model_with_hidden_layer` from Exercise 4. However, you need to fill in the functions `fit_mnist_model` and `evaluate_mnist_model`. Try to experiment with the number of epochs and batch size if the tests do not pass initially.
 
 ---
